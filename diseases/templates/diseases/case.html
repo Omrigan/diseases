@@ -1,0 +1,22 @@
+{% extends 'diseases/base_site.html' %}
+{% block container %}
+    <div class="container">
+        <h1>Список всех случаев заболеваний</h1>
+        {% for c in cases %}
+
+            <div class="col-md-6 post">
+                <h3>{{ c.name }}</h3>
+                <i><h4>{{ c.disease }}</h4></i>
+                Дата начала болезни: <b>{{ c.dateStart|date:"d.m.y" }}</b> <br>
+                Дата конца болезни: <b>{{ c.dateFinish|date:"d.m.y"|default:"не закончено" }}</b> <br>
+                <div class="content">
+                    {{ c.description }}
+                </div>
+                <a href="/case/{{ c.id }}">Подробно</a>
+                <!--//content-->
+            </div>
+            <!--//section-inner-->
+
+        {% endfor %}
+    </div>
+{% endblock %}

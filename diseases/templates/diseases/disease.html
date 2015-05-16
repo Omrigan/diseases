@@ -1,0 +1,21 @@
+{% extends 'diseases/base_site.html' %}
+{% block container %}
+    <div class="container">
+    <h1>Список всех заболеваний</h1>
+        {% for d in diseases %}
+
+            <div class="col-md-6 post">
+                <h3>{{ d.name }}</h3>
+                Дата создания <b>{{ d.dateCreation|date:"d.m.y" }}</b>
+
+                <div class="content">
+                    {{ d.description }}
+                </div>
+                <a href="/dis/{{ d.id }}">Подробно</a>
+                <!--//content-->
+            </div>
+            <!--//section-inner-->
+
+        {% endfor %}
+    </div>
+{% endblock %}
