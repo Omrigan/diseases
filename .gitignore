@@ -1,0 +1,18 @@
+#IDE
+*.iml
+.idea/
+# OS generated files 
+.DS_Store*
+ehthumbs.db
+Icon?
+Thumbs.db
+#Git
+!.gitkeep
+#Npm
+node_modules/
+#Bower
+bower_components/
+public/libs/
+# Other
+tmp
+logs/*
