@@ -1,7 +1,11 @@
 {% extends 'diseases/base_site.html' %}
+{% block title %}
+    Список случаев заболеваний
+{% endblock %}
 {% block container %}
     <div class="container">
         <h1>Список всех случаев заболеваний</h1>
+        <h4><a href="/case/0">Создать новое</a></h4>
         {% for c in cases %}
 
             <div class="col-md-6 post">
@@ -9,6 +13,7 @@
                 <i><h4>{{ c.disease }}</h4></i>
                 Дата начала болезни: <b>{{ c.dateStart|date:"d.m.y" }}</b> <br>
                 Дата конца болезни: <b>{{ c.dateFinish|date:"d.m.y"|default:"не закончено" }}</b> <br>
+                Железная дорога: <i>{{ c.location }}</i>
                 <div class="content">
                     {{ c.description }}
                 </div>

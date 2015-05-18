@@ -12,3 +12,4 @@ class CaseAdmin(admin.ModelAdmin):
 
 admin.site.register(Disease, DiseaseAdmin)
 admin.site.register(Case, CaseAdmin)
+admin.site.register(Location)

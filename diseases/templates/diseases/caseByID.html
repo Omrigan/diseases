@@ -1,27 +1,42 @@
 {% extends 'diseases/base_site.html' %}
+{% block title %}
+    {{ case.name }}
+{% endblock %}
 {% block container %}
     <div class="container">
-        <h1>Редактирование элемента "{{ case.name }}" </h1>
+        <h1>{{ case.name }}</h1>
 
         <form action="{% url 'caseById' case.id %}" method="POST">
             {% csrf_token %}
             ФИО заболевшего: <input type="text" name="name" value="{{ case.name }}"> <br>
             Заболевание:
+
             <select name="disease_id">
                 {% for d in diseases %}
                     {% if d.id == case.disease.id %}
                         <option value="{{ d.id }}" selected>{{ d.name }}</option>
                     {% else %}
-                        <option value="{{ d.id }}" selected>{{ d.name }}</option>
+                        <option value="{{ d.id }}">{{ d.name }}</option>
                     {% endif %}
                 {% endfor %}
-
             </select><br>
+            <select name="location">
+                {% for l in locations %}
+                    {% if l.id == case.location.id %}
+                        <option value="{{ l.id }}" selected>{{ l.name }}</option>
+                    {% else %}
+                        <option value="{{ l.id }}">{{ l.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select><br>
+
+
             Дата начала: <input type="date" name="dateStart" value="{{ case.dateStart|date:"Y-m-d" }}"> <br>
             Дата окончания: <input type="date" name="dateFinish" value="{{ case.dateFinish|date:"Y-m-d" }}"> <br>
             Описание: <br>
             <textarea name="description" cols="25" rows="7">{{ case.description }}</textarea> <br>
-            <input type="submit" value="Применить изменения"/>
+            <input type="submit" name="change" value="Применить изменения"/>
+            <input type="submit" name="delete" value="Удалить">
         </form>
     </div>
 {% endblock %}

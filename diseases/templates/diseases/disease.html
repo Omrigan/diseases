@@ -1,7 +1,11 @@
 {% extends 'diseases/base_site.html' %}
+{% block title %}
+    Список заболеваний
+{% endblock %}
 {% block container %}
     <div class="container">
-    <h1>Список всех заболеваний</h1>
+        <h1>Список всех заболеваний</h1>
+        <h4><a href="/dis/0">Создать новое</a></h4>
         {% for d in diseases %}
 
             <div class="col-md-6 post">

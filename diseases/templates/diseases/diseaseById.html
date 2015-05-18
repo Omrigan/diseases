@@ -5,13 +5,14 @@
 {% endblock %}
 {% block container %}
     <div class="container">
-    <h1>Редактирование элемента "{{ disease.name }}"    </h1>
+    <h1>{{ disease.name }}</h1>
         <form action="{% url 'diseaseById' disease.id %}" method="POST">
             {% csrf_token %}
             Заголовок: <input type="text" name="name" value="{{ disease.name }}"> <br>
             Описание: <br>
             <textarea name="description" cols="25" rows="7">{{ disease.description }}</textarea> <br>
-            <input type="submit" value="Применить изменения" />
+            <input type="submit" name="change" value="Применить изменения"/>
+            <input type="submit" name="delete" value="Удалить">
         </form>
     </div>
 {% endblock %}
