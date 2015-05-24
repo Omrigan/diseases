@@ -10,7 +10,6 @@ def index(req):
 
 
 def disease(req):
-    print(Disease.objects.all())
     return render(req, 'diseases/disease.html', {'activate': {'dis': 'active'}, 'diseases': Disease.objects.all()})
 
 
@@ -36,27 +35,23 @@ def diseaseById(req, dis_id):
 
 
 def case(req):
-    LOCATION = (
-        ('1', 'Восточно-Сибирская'),
-        ('2', 'Горьковская'),
-        ('3', 'Дальневосточная'),
-        ('4', 'Забайкальская'),
-        ('5', 'Западно-Сибирская'),
-        ('6', 'Калининградская'),
-        ('7', 'Красноярская'),
-        ('8', 'Куйбышевская'),
-        ('9', 'Московская'),
-        ('10', 'Октябрьская'),
-        ('11', 'Приволжская'),
-        ('12', 'Свердловская'),
-        ('13', 'Северная'),
-        ('14', 'Северо-Кавказская'),
-        ('15', 'Юго-Восточная'),
-        ('16', 'Южно-Уральская')
-    )
-    # for l in LOCATION:
-    #     Location.objects.create(name=l[1])
-    return render(req, 'diseases/case.html', {'activate': {'case': 'active'}, 'cases': Case.objects.all()})
+    cases = Case.objects.all()
+    params = {}
+
+    if 'location_id' in req.GET:
+        params['location_id'] = req.GET["location_id"]
+        if params['location_id'] != '-1': cases = cases.filter(location=params['location_id'])
+        params['dateStart'] = dateparse.parse_date(req.GET["dateStart"])
+        params['dateFinish'] = dateparse.parse_date(req.GET["dateFinish"])
+        cases = cases.filter(dateStart__range=(params['dateStart'], params['dateFinish']))
+    else:
+        params['location_id'] = -1
+        params['dateStart'] = timezone.datetime.min
+        params['dateFinish'] = timezone.datetime.max
+
+    return render(req, 'diseases/case.html',
+                  {'activate': {'case': 'active'}, 'cases': cases, 'locations': Location.objects.all(),
+                   'params': params})
 
 
 def caseById(req, case_id):
@@ -78,6 +73,7 @@ def caseById(req, case_id):
             case.description = req.POST["description"]
             case.location = Location.objects.get(pk=req.POST["location"])
             case.save()
+
     return render(req, 'diseases/caseByID.html',
                   {'activate': {'none': 'active'}, 'case': case, 'diseases': Disease.objects.all(),
                    'locations': Location.objects.all()})

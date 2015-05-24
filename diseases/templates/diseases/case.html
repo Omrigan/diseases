@@ -6,22 +6,62 @@
     <div class="container">
         <h1>Список всех случаев заболеваний</h1>
         <h4><a href="/case/0">Создать новое</a></h4>
-        {% for c in cases %}
 
-            <div class="col-md-6 post">
-                <h3>{{ c.name }}</h3>
-                <i><h4>{{ c.disease }}</h4></i>
-                Дата начала болезни: <b>{{ c.dateStart|date:"d.m.y" }}</b> <br>
-                Дата конца болезни: <b>{{ c.dateFinish|date:"d.m.y"|default:"не закончено" }}</b> <br>
-                Железная дорога: <i>{{ c.location }}</i>
-                <div class="content">
-                    {{ c.description }}
-                </div>
-                <a href="/case/{{ c.id }}">Подробно</a>
-                <!--//content-->
-            </div>
-            <!--//section-inner-->
+        <form action="/case" method="get">
+            Железная дорога:
+            <select name="location_id">
+                {% if -1 == params.location_id %}
+                    <option value="-1" selected>Все</option>
+                {% else %}
+                    <option value="-1">Все</option>
+                {% endif %}
 
-        {% endfor %}
+                {% for l in locations %}
+                    {% if l.id == params.location.id %}
+                        <option value="{{ l.id }}" selected>{{ l.name }}</option>
+                    {% else %}
+                        <option value="{{ l.id }}">{{ l.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select>
+            От: <input type="date" name="dateStart" value="{{ params.dateStart|date:"Y-m-d" }}">
+            До: <input type="date" name="dateFinish" value="{{ params.dateFinish|date:"Y-m-d" }}">
+            <input type="submit" name="change" value="Фильтровать"/>
+        </form>
+        <table class="table">
+            <thead>
+            <tr>
+                <td>Имя человека</td>
+                <td>Болезнь</td>
+                <td>Дата начала болезни</td>
+                <td>Дата конца болезни</td>
+                <td>Железная дорога</td>
+                <td>Описание</td>
+            </tr>
+            </thead>
+
+
+            <tbody>
+
+            {% for c in cases %}
+
+                <tr>
+                    <td><a href="/case/{{ c.id }}">{{ c.name }}</a></td>
+                    <td>{{ c.disease }}</td>
+                    <td><b>{{ c.dateStart|date:"d.m.y" }}</b></td>
+                    <td><b>{{ c.dateFinish|date:"d.m.y"|default:"не закончено" }}</b></td>
+                    <td>{{ c.location }}</td>
+                    <td>
+                        {{ c.description }}
+                    </td>
+
+                    <!--//content-->
+                </tr>
+                <!--//section-inner-->
+
+            {% endfor %}
+            </tbody>
+
+        </table>
     </div>
 {% endblock %}

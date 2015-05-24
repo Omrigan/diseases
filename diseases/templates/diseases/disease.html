@@ -6,20 +6,34 @@
     <div class="container">
         <h1>Список всех заболеваний</h1>
         <h4><a href="/dis/0">Создать новое</a></h4>
-        {% for d in diseases %}
+       <table class="table">
+            <thead>
+            <tr>
+                <td>Болезнь</td>
+                <td>Дата создания</td>
+                <td>Описание</td>
+            </tr>
+            </thead>
 
-            <div class="col-md-6 post">
-                <h3>{{ d.name }}</h3>
-                Дата создания <b>{{ d.dateCreation|date:"d.m.y" }}</b>
 
-                <div class="content">
-                    {{ d.description }}
-                </div>
-                <a href="/dis/{{ d.id }}">Подробно</a>
-                <!--//content-->
-            </div>
-            <!--//section-inner-->
+            <tbody>
 
-        {% endfor %}
+            {% for d in diseases %}
+
+                <tr>
+                    <td><a href="/dis/{{ d.id }}">{{ d.name }}</a></td>
+                    <td><b>{{ d.dateCreation|date:"d.m.y" }}</b></td>
+                    <td>
+                        {{ d.description }}
+                    </td>
+
+                    <!--//content-->
+                </tr>
+                <!--//section-inner-->
+
+            {% endfor %}
+            </tbody>
+
+        </table>
     </div>
 {% endblock %}
