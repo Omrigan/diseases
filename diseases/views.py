@@ -25,6 +25,7 @@ def diseaseById(req, dis_id):
     if req.POST:
         if "delete" in req.POST:
             dis.delete()
+            return redirect('/dis')
         else:
             dis.name = req.POST["name"]
             dis.description = req.POST["description"]
@@ -65,6 +66,7 @@ def caseById(req, case_id):
     if req.POST:
         if "delete" in req.POST:
             case.delete()
+            return redirect('/dis')
         else:
             case.name = req.POST["name"]
             case.dateStart = dateparse.parse_date(req.POST["dateStart"])

@@ -16,3 +16,4 @@ public/libs/
 # Other
 tmp
 logs/*
+*.sqlite3
