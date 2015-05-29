@@ -18,7 +18,7 @@ class Location(models.Model):
 
 
 class Case(models.Model):
-    name = models.CharField(max_length=300)
+    name = models.ForeignKey('Person')
     dateStart = models.DateTimeField('Start case')
     dateFinish = models.DateTimeField('Finish case', blank=True, null=True)
     disease = models.ForeignKey(Disease)
@@ -26,6 +26,12 @@ class Case(models.Model):
     location = models.ForeignKey(Location)
 
     def __str__(self):
-        return self.name
+        return self.name.name
 
+
+class Person(models.Model):
+    name = models.CharField(max_length=300)
+
+    def __str__(self):
+        return self.name
 

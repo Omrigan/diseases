@@ -8,7 +8,15 @@
 
         <form action="{% url 'caseById' case.id %}" method="POST">
             {% csrf_token %}
-            ФИО заболевшего: <input type="text" name="name" value="{{ case.name }}"> <br>
+            ФИО заболевшего: <select name="person_id">
+                {% for p in persons%}
+                    {% if p.id == case.name.id %}
+                        <option value="{{ p.id }}" selected>{{ p.name }}</option>
+                    {% else %}
+                        <option value="{{ p.id }}">{{ p.name }}</option>
+                    {% endif %}
+                {% endfor %}
+            </select> <br>
             Заболевание:
 
             <select name="disease_id">

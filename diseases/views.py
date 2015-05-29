@@ -68,7 +68,7 @@ def caseById(req, case_id):
             case.delete()
             return redirect('/dis')
         else:
-            case.name = req.POST["name"]
+            case.name = Person.objects.get(pk=req.POST["person_id"])
             case.dateStart = dateparse.parse_date(req.POST["dateStart"])
             case.dateFinish = dateparse.parse_date(req.POST["dateFinish"])
             case.disease = Disease.objects.get(pk=req.POST["disease_id"])
@@ -78,4 +78,4 @@ def caseById(req, case_id):
 
     return render(req, 'diseases/caseByID.html',
                   {'activate': {'none': 'active'}, 'case': case, 'diseases': Disease.objects.all(),
-                   'locations': Location.objects.all()})
+                   'locations': Location.objects.all(), 'persons': Person.objects.all()})
