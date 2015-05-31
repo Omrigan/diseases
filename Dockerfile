@@ -1,11 +1,10 @@
 FROM ubuntu:14.04
 MAINTAINER Oleg Vasilev <omrigann@gmail.com>
-RUN apt-get update && apt-get -y upgrade &&
+RUN apt-get update && apt-get -y upgrade && \
     apt-get install -y git build-essential \
                        python3 python3-dev python3-pip \
-                       nginx &&
+                       nginx && \
     apt-get clean
-
 ADD . /var/www/application
 RUN rm /etc/nginx/sites-enabled/default
 ADD nginx.conf /etc/nginx/sites-enabled/default
