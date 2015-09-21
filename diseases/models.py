@@ -12,7 +12,6 @@ class Disease(models.Model):
 
 class Location(models.Model):
     name = models.CharField(max_length=300)
-
     def __str__(self):
         return self.name
 
@@ -21,8 +20,8 @@ class Case(models.Model):
     name = models.ForeignKey('Person')
     dateStart = models.DateTimeField('Start case')
     dateFinish = models.DateTimeField('Finish case', blank=True, null=True)
-    disease = models.ForeignKey(Disease)
-    description = models.CharField(max_length=4000)
+    disease = models.ForeignKey(Disease, related_name='disease')
+    description = models.CharField('Desc', max_length=4000)
     location = models.ForeignKey(Location)
 
     def __str__(self):
@@ -31,7 +30,6 @@ class Case(models.Model):
 
 class Person(models.Model):
     name = models.CharField(max_length=300)
-
     def __str__(self):
         return self.name
 

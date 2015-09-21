@@ -20,7 +20,7 @@
             Заболевание:
 
             <select name="disease_id">
-                {% for d in diseases %}
+                {% for d in diseases%}
                     {% if d.id == case.disease.id %}
                         <option value="{{ d.id }}" selected>{{ d.name }}</option>
                     {% else %}
